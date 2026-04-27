@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Пелих Ксения Дмитриевна - Адвокат</title>
+    
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* ======================== CSS Reset & Variables ======================== */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg-color: #414857;
+            --text-main: #f8fafc;
+            --text-muted: #bcbcbc;
+            --accent-color: #dfdfdf; 
+            --accent-hover: #4c607c;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            
+            --font-head: 'Montserrat', sans-serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body.no-scroll {
+            overflow: hidden;
+        }
+
+        /* ======================== Фоновые эффекты ======================== */
+        .bg-shapes {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        .blur-circle {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.5;
+        }
+
+        .circle-1 {
+            top: -10%; left: -10%;
+            width: 50vw; height: 50vw;
+            background: #1e3a8a;
+        }
+
+        .circle-2 {
+            bottom: -10%; right: -5%;
+            width: 40vw; height: 40vw;
+            background: #4c607c; 
+        }
+
+        /* ======================== Типографика и Общие стили ======================== */
+h1, h2, h3, h4 {
+    font-family: 'Lora', serif;
+}
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 6rem 0;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background-color: var(--accent-color);
+            color: #fff;
+            font-family: var(--font-head);
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* ======================== Навигация ======================== */
+        header {
+            position: fixed;
+            top: 0; width: 100%;
+            z-index: 100;
+            background: rgba(11, 17, 32, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-head);
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .logo span { color: var(--accent-color); }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .burger {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            z-index: 101;
+        }
+
+        .mobile-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100vh;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s;
+            z-index: 98;
+        }
+
+        .mobile-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* ======================== Hero Section ======================== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(to right, rgba(11, 17, 32, 0.9), rgba(11, 17, 32, 0.5)), 
+                        url('https://media.istockphoto.com/id/857582316/ru/%D1%84%D0%BE%D1%82%D0%BE/%D0%BE%D1%84%D0%B8%D1%81-%D1%8E%D1%80%D0%B8%D1%81%D1%82%D0%BE%D0%B2.jpg?s=612x612&w=0&k=20&c=NKusb44xMgW4uIm2KhjY0rs4bWB78VfQ5LqD9-8eU38=') center/cover no-repeat;
+            padding-top: 80px;
+        }
+
+        .hero-content {
+            max-width: 600px;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+        }
+
+        /* ======================== О юристе ======================== */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-img {
+            width: 100%;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border: 1px solid var(--glass-border);
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        /* ======================== Услуги ======================== */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            text-align: left;
+            transition: transform 0.3s, background 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .service-icon {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .service-card h3 { margin-bottom: 1rem; font-size: 1.2rem;}
+        .service-card p { color: var(--text-muted); font-size: 0.95rem; }
+
+
+        /* ======================== Контакты ======================== */
+
+   
+.contacts-section {
+    padding: 80px 0;
+    color: #f8fafc;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 50px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.contacts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+
+.contact-card {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.03); 
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+}
+
+
+.contact-card:hover {
+    transform: translateY(-10px);
+    background: rgba(255, 255, 255, 0.07);
+    border-color: #dfdfdf; 
+}
+
+.contact-icon {
+    font-size: 2.5rem;
+    color: #dfdfdf;
+    margin-bottom: 15px;
+}
+
+.contact-label {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #94a3b8;
+    margin-bottom: 8px;
+}
+
+.contact-value {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+}
+
+
+@media (max-width: 600px) {
+    .contacts-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
+}
+        /* ======================== Footer ======================== */
+        footer {
+            padding: 2rem 0;
+            border-top: 1px solid var(--glass-border);
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        footer a { color: var(--accent-color); margin-left: 10px; }
+
+        /* ======================== Адаптивность ======================== */
+        @media (max-width: 992px) {
+            .hero-title { font-size: 2.8rem; }
+            .about-grid, .contacts-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .about-img { max-height: 400px; object-fit: cover; }
+        }
+
+        @media (max-width: 768px) {
+            .burger { display: block; }
+            .nav-links {
+                position: fixed;
+                top: 0; right: -100%;
+                width: 280px; height: 100vh;
+                background: #0f172a;
+                flex-direction: column;
+                padding: 100px 2rem 2rem;
+                transition: 0.3s;
+                z-index: 99;
+                border-left: 1px solid var(--glass-border);
+            }
+            .nav-links.active { right: 0; }
+            .hero-title { font-size: 2.2rem; }
+            .price-item { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+            .testimonial-card { min-width: 280px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-shapes">
+        <div class="blur-circle circle-1"></div>
+        <div class="blur-circle circle-2"></div>
+    </div>
+
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <header>
+        <div class="container nav-container">
+            <div class="logo">Адвокат<span> Ксения Пелих</span></div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#about" class="nav-link">Обо мне</a></li>
+                <li><a href="#services" class="nav-link">Услуги</a></li>
+                <li><a href="#contacts" class="nav-link">Контакты</a></li>
+            </ul>
+            <div class="burger" id="burgerMenu">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero" id="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Ксения Дмитриевна Пелих</h1>
+                <p class="hero-subtitle">Адвокат НО «Седьмая коллегия адвокатов Омской области»
+                    Регистрационный номер в реестре адвокатов 55/1554
+                </p>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="container">
+            <div class="about-grid">
+                <img src="5436272512259003623.jpg" alt="Пелих Ксения" class="about-img">
+                <div class="about-text">
+                    <h2>Обо мне</h2>
+                    <p>Оказываю юридическую помощь в виде консультаций по правовым вопросам, осуществляю представительство по гражданским, уголовным и делам об административных правонарушениях. Участвую в переговорах для урегулирования споров в досудебном порядке.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services">
+        <div class="container">
+            <h2>Основные направления работы:</h2>
+            <div class="services-grid">
+                
+                <div class="glass-card service-card">
+                    <i class="fa-solid fa-gavel service-icon"></i>
+                    <h3>Защита по уголовным делам</h3>
+                    <p>Представление интересов на этапе следствия и в суде. Защита обвиняемых и подозреваемых.</p>
+                </div>
+
+                <div class="glass-card service-card">
+                    <i class="fa-solid fa-car-burst service-icon"></i>
+                    <h3>Споры о ДТП</h3>
+                    <p>Оспаривание вины, взыскание ущерба со страховых компаний (ОСАГО/КАСКО) и виновников.</p>
+                </div>
+
+                <div class="glass-card service-card">
+                    <i class="fa-solid fa-scale-balanced service-icon"></i>
+                    <h3>Защита чести и достоинства</h3>
+                    <p>Удаление порочащей информации, взыскание морального вреда, опровержение клеветы.</p>
+                </div>
+
+                <div class="glass-card service-card">
+                    <i class="fa-solid fa-people-roof service-icon"></i>
+                    <h3>Семейные споры</h3>
+                    <p>Развод, раздел имущества, алименты, определение места жительства ребенка.</p>
+                </div>
+                
+                <div class="glass-card service-card">
+                    <i class="fa-solid fa-file-signature service-icon"></i>
+                    <h3>Наследственное право</h3>
+                    <p>Вступление в наследство, оспаривание завещания, восстановление пропущенных сроков.</p>
+                </div>
+
+                <div class="glass-card service-card">
+                    <i class="fa-solid fa-shield-halved service-icon"></i>
+                    <h3>Административные дела</h3>
+                    <p>Защита прав в делах об административных правонарушениях, оспаривание штрафов.</p>
+                </div>
+                 <div class="glass-card service-card">
+                    <i class="fa-solid fa-hand-holding-dollar service-icon"></i>
+                    <h3>Возмещение ущерба</h3>
+                    <p>Представление интересов в спорах о взыскании долгов и возмещении материального ущерба.</p>
+                </div>
+                <div class="glass-card service-card">
+                    <i class="fa-solid fa-people-arrows service-icon"></i>
+                    <h3>Защита прав потребителей</h3>
+                    <p>Оспаривание некачественно оказанной услуги, оспаривание некачественного товара.</p>
+                </div>
+                <div class="glass-card service-card">
+                    <i class="fa-solid fa-house service-icon"></i>
+                    <h3>Жилищные споры</h3>
+                    <p>Выселение из жилого помещения, принудительный выкуп незначительной доли в жилом помещении и др.</p>
+                </div>
+
+
+            </div>
+        </div>
+    </section>
+    <section id="contacts">
+        <div class="container">
+            <h2>Свяжитесь со мной</h2>
+<section id="contacts-block" class="contacts-section">
+    <div class="container">
+        
+        <div class="contacts-grid">
+            <a href="tel:+79136456219" class="contact-card glass-card">
+                <div class="contact-icon">
+                    <i class="fa-solid fa-phone"></i>
+                </div>
+                <div class="contact-label">Телефон</div>
+                <div class="contact-value">+7 (913) 645-62-19</div>
+            </a>
+
+            <a href="mailto:kseniya_pelikh@mail.ru" class="contact-card glass-card">
+                <div class="contact-icon">
+                    <i class="fa-solid fa-envelope"></i>
+                </div>
+                <div class="contact-label">Электронная почта</div>
+                <div class="contact-value">kseniya_pelikh@mail.ru</div>
+            </a>
+
+            <a href="https://t.me/PelikhKseniya" target="_blank" class="contact-card glass-card">
+                <div class="contact-icon">
+                    <i class="fa-brands fa-telegram"></i>
+                </div>
+                <div class="contact-label">Telegram</div>
+                <div class="contact-value">@PelikhKseniya</div>
+            </a>
+
+            <a href="https://vk.ru/kseniya_pelikh" target="_blank" class="contact-card glass-card">
+                <div class="contact-icon">
+                    <i class="fa-brands fa-vk"></i>
+                </div>
+                <div class="contact-label">ВКонтакте</div>
+                <div class="contact-value">vk.ru/kseniya_pelikh</div>
+            </a>
+
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Пелих Ксения Дмитриевна. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script>
+        // --- Мобильное меню ---
+        const burger = document.getElementById('burgerMenu');
+        const navLinks = document.getElementById('navLinks');
+        const overlay = document.getElementById('mobileOverlay');
+        const links = document.querySelectorAll('.nav-link');
+
+        function toggleMenu() {
+            navLinks.classList.toggle('active');
+            overlay.classList.toggle('active');
+            document.body.classList.toggle('no-scroll');
+            
+
+            const icon = burger.querySelector('i');
+            if(navLinks.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-xmark');
+            } else {
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+            }
+        }
+
+        burger.addEventListener('click', toggleMenu);
+        overlay.addEventListener('click', toggleMenu);
+
+
+        links.forEach(link => {
+            link.addEventListener('click', () => {
+                if (navLinks.classList.contains('active')) {
+                    toggleMenu();
+                }
+            });
+        });
+
+        // --- 2. Аккордеон (FAQ) ---
+        const faqQuestions = document.querySelectorAll('.faq-question');
+
+        faqQuestions.forEach(question => {
+            question.addEventListener('click', function() {
+              
+                faqQuestions.forEach(q => {
+                    if (q !== this) {
+                        q.classList.remove('active');
+                        q.nextElementSibling.style.maxHeight = null;
+                    }
+                });
+
+
+                // Тоггл текущего
+                this.classList.toggle('active');
+                const answer = this.nextElementSibling;
+                
+                if (answer.style.maxHeight) {
+                    answer.style.maxHeight = null;
+                } else {
+                    answer.style.maxHeight = answer.scrollHeight + "px";
+                }
+            });
+        });
+
+
+    </script>
+</body>
+</html>
